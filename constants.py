@@ -1,0 +1,1 @@
+DB_NAME = "gpx_daten"
