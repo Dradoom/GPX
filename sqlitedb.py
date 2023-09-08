@@ -1,38 +1,42 @@
 import os
 import sqlite3
 import query
-from constants import DB_NAME
 
-def connect(database = DB_NAME):
-    return sqlite3.connect("{}.db".format(database))
+class SqliteDatabase:
+    def __init__(self, db_name):
+        self.database = db_name
+        self.connection = None
 
-def create_database(database=DB_NAME):
-    connect(database)
+    def connect(self):
+        self.connection = sqlite3.connect("{}.db".format(self.database))
 
-def drop_database(database = DB_NAME):
-    if database_exists(database):
-        os.remove("{}.db".format(database))
+    def create_database(self):
+        self.connect()
 
-def database_exists(database=DB_NAME):
-    return os.path.exists("{}.db".format(database))
+    def drop_database(self):
+        if self.database_exists():
+            os.remove("{}.db".format(self.database))
 
-def create_tables(connection):
-    with connection:
-        cursor = connection.cursor()
-        sql = query.CREATE_TABLE_PERSON
-        cursor.execute(sql)
+    def database_exists(self):
+        return os.path.exists("{}.db".format(self.database))
 
-        cursor = connection.cursor()
-        sql = query.CREATE_TABLE_VEHICLE
-        cursor.execute(sql)
+    def create_tables(self):
+        with self.connection:
+            cursor = self.connection.cursor()
+            sql = query.CREATE_TABLE_PERSON
+            cursor.execute(sql)
 
-        cursor = connection.cursor()
-        sql = query.CREATE_TABLE_TRACK
-        cursor.execute(sql)
+            cursor = self.connection.cursor()
+            sql = query.CREATE_TABLE_VEHICLE
+            cursor.execute(sql)
 
-        sql = query.CREATE_TABLE_POINTS
-        cursor.execute(sql)
-        print("Tables created!")
-        cursor.close()
+            cursor = self.connection.cursor()
+            sql = query.CREATE_TABLE_TRACK
+            cursor.execute(sql)
 
-        connection.commit()
+            sql = query.CREATE_TABLE_POINTS
+            cursor.execute(sql)
+            print("Tables created!")
+            cursor.close()
+
+            self.connection.commit()

@@ -2,3 +2,4 @@ gpx_daten.db
 __pycache__/constants.cpython-311.pyc
 __pycache__/query.cpython-311.pyc
 __pycache__/sqlitedb.cpython-311.pyc
+/__pycache__/fileConverter.cpython-311.pyc
