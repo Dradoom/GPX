@@ -20,10 +20,79 @@ class FileConverter:
             gpx = gpxpy.parse(gpx_file)
             file_name_arry = file.split('_')
             person = Person(file_name_arry[0], '','','')
-            db_session.add(person)
+            self.get_name(person.nick, person)
+            personDB = db_session.query(Person).filter(Person.name == person.name, person.vorname == person.vorname)
+            print(personDB)
+            if(db_session.execute(personDB, person.name)):
+                db_session.add(person)
+                db_session.commit()
+
+            vehicle = Vehicle(file_name_arry[1],'')
+            db_session.add(vehicle)
             db_session.commit()
+
+            track = Track(file, person, vehicle)
+            db_session.add(track)
+            db_session.commit()
+
+            # for waypoint in gpx.waypoints:
+            #     if(waypoint.latitude == None):
+            #         continue
+            #     point = Point()
+            #     point.lat = waypoint.latitude
+            #     point.lon = waypoint.longitude
+            #     point.ele = waypoint.elevation
+            #     point.dt = waypoint.time
+            #     point.tid = track.tid
+            #     db_session.add(point)
+            #     db_session.commit()
             
-            for waypoint in gpx.waypoints:
-                waypoint_lat = waypoint.latitude
-                waypoint_lon = waypoint.longitude
-                waypoint_ele = waypoint.elevation
+            # for waytrack in gpx.tracks:
+            #     for segments in waytrack.segments:
+            #          for waypoint in segments.points:
+            #             if(waypoint.latitude == None):
+            #                  continue
+            #             point = Point()
+            #             point.lat = waypoint.latitude
+            #             point.lon = waypoint.longitude
+            #             point.ele = waypoint.elevation
+            #             point.dt = waypoint.time
+            #             point.tid = track.tid
+
+            #             db_session.add(point)
+            #             db_session.commit()
+
+    def get_name(self, nick, person):
+            match nick:
+                 case 'AA':
+                      person.name = 'Alef'
+                      person.vorname = 'Andreas'
+                      person.email = person.vorname + '.' + person.name + '@web.de'
+                      return
+                 case 'BL':
+                      person.name = 'Lange'
+                      person.vorname = 'Basti'
+                      person.email = person.vorname + '.' + person.name + '@web.de'
+                      return
+                 case 'KA':
+                      person.name = 'Anderson'
+                      person.vorname = 'Karin'
+                      person.email = person.vorname + '.' + person.name + '@web.de'
+                      return
+                 case 'PL':
+                      person.name = 'Lenz'
+                      person.vorname = 'Phil'
+                      person.email = person.vorname + '.' + person.name + '@web.de'
+                      return
+                 case 'SH':
+                      person.name = 'Hauser'
+                      person.vorname = 'Silke'
+                      person.email = person.vorname + '.' + person.name + '@web.de'
+                      return
+                 case 'SL':
+                      person.name = 'Loose'
+                      person.vorname = 'Sonia'
+                      person.email = person.vorname + '.' + person.name + '@web.de'
+                      return
+                 case _:
+                      return

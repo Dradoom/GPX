@@ -1,7 +1,14 @@
 from flask import Flask
-from database import init_db
+from database import init_db, db_session
+from fileConverter import FileConverter
+from constants import FILE_PATH
 
-init_db()
+if __name__ == "__main__":
 
-app = Flask(__name__)
+    init_db()
+
+    file_converter = FileConverter(FILE_PATH, db_session)
+    file_converter.convert_files()
+
+    app = Flask(__name__)
 

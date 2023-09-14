@@ -10,5 +10,5 @@ class Track(Base):
 
     def __init__(self, dateiname, person, vehicle):
         self.dateiname = dateiname
-        self.pid = person.id
+        self.pid = person.pid
         self.fzid = vehicle.fzid
