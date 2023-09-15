@@ -11,4 +11,3 @@ if __name__ == "__main__":
     file_converter.convert_files()
 
     app = Flask(__name__)
-
