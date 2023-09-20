@@ -1,0 +1,12 @@
+.vs/
+[Bb]in
+[Dd]ebug
+[Oo]bj
+[Rr]elease
+[Dd]ata
+*.user
+*pycache*
+*.db
+.venv
+.env
+.idea

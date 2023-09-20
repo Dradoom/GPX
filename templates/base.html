@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        {% block head %}
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        {% block styles %}
+            <!-- Bootstrap CSS -->
+            {{ bootstrap.load_css() }}
+        {% endblock %}
+
+        <title>Zahlen Raten</title>
+        {% endblock %}
+    </head>
+    <body style="background-color: #F5F3F1;">
+      {% from 'bootstrap5/nav.html' import render_nav_item %}
+      <div id="header">
+        <nav class="navbar navbar-expand-lg navbar-dark d-flex justify-content-between" style="background-color: #212529;"  >
+          <div class="navbar-nav">
+              {{ render_nav_item('index', 'Home') }}
+          </div>
+          <div class="navbar-nav">
+          </div>
+      </nav>
+      </div>
+        <!-- Your page content -->
+        <div class="container mt-3">
+          {% block content %}{% endblock %}
+        </div>
+
+        {% block scripts %}
+            <!-- Optional JavaScript -->
+            {{ bootstrap.load_js() }}
+        {% endblock %}
+    </body>
+</html>
