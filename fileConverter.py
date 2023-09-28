@@ -25,61 +25,68 @@ class FileConverter:
                personDB = db_session.query(Person).filter_by(name=person.name).first()
                if(personDB == None or personDB.pid == None):
                     db_session.add(person)
-                    db_session.commit()
                else:
                     person = personDB
 
-          vehicle = Vehicle(file_name_arry[1],'')
-          vehicleDB = None
-          vehicleDB = db_session.query(Vehicle).filter_by(polkz=vehicle.polkz).first()
-          if(vehicleDB == None or vehicleDB.fzid == None):
-               db_session.add(vehicle)
-          else:
-               vehicle = vehicleDB
+               db_session.commit()
 
-          track = Track(file, person, vehicle)
-          trackDB = None
-          trackDB = db_session.query(Track).filter_by(dateiname=file).first()
-          if(trackDB == None or trackDB.tid == None):
-               db_session.add(track)
-          else:
-               track = trackDB
-
-          if('PL_WIT-PL111' in file):
-               print('here')
-
-          for waypoint in gpx.waypoints:
-               point = Point()
-               point.lat = waypoint.latitude
-               point.lon = waypoint.longitude
-               point.ele = waypoint.elevation
-               point.dt = waypoint.time
-               point.tid = track.tid
-
-               pointDB = None
-               pointDB = db_session.query(Point).filter_by(dt=point.dt, lat=point.lat, lon=point.lon, ele=point.ele).first()
-               if(pointDB == None or pointDB.ptid == None):
-                    db_session.add(point)
+               vehicle = Vehicle(file_name_arry[1],'')
+               vehicleDB = None
+               vehicleDB = db_session.query(Vehicle).filter_by(polkz=vehicle.polkz).first()
+               if(vehicleDB == None or vehicleDB.fzid == None):
+                    db_session.add(vehicle)
                else:
-                    point = pointDB
+                    vehicle = vehicleDB
+               db_session.commit()
 
-          for waytrack in gpx.tracks:
-               for segments in waytrack.segments:
-                    for waypoint in segments.points:
-                         point = Point()
-                         point.lat = waypoint.latitude
-                         point.lon = waypoint.longitude
-                         point.ele = waypoint.elevation
-                         point.dt = waypoint.time
-                         point.tid = track.tid
+               track = Track(file, person, vehicle)
+               trackDB = None
+               trackDB = db_session.query(Track).filter_by(dateiname=file).first()
+               if(trackDB == None or trackDB.tid == None):
+                    db_session.add(track)
+               else:
+                    track = trackDB
 
-                         pointDB = None
-                         pointDB = db_session.query(Point).filter_by(dt=point.dt, lat=point.lat, lon=point.lon, ele=point.ele).first()
-                         if(pointDB == None or pointDB.ptid == None):
-                              db_session.add(point)
-                         else:
-                              point = pointDB
-          db_session.commit()
+               db_session.commit()
+
+               if('PL_WIT-PL111' in file):
+                    print('here')
+
+               print(track.dateiname)
+
+               for waypoint in gpx.waypoints:
+                    point = Point()
+                    point.lat = waypoint.latitude
+                    point.lon = waypoint.longitude
+                    point.ele = waypoint.elevation
+                    point.dt = waypoint.time
+                    point.tid = track.tid
+
+                    pointDB = None
+                    pointDB = db_session.query(Point).filter_by(dt=point.dt, lat=point.lat, lon=point.lon, ele=point.ele).first()
+                    if(pointDB == None or pointDB.ptid == None):
+                         db_session.add(point)
+                    else:
+                         point = pointDB
+               db_session.commit()
+
+               for waytrack in gpx.tracks:
+                    for segments in waytrack.segments:
+                         for waypoint in segments.points:
+                              point = Point()
+                              point.lat = waypoint.latitude
+                              point.lon = waypoint.longitude
+                              point.ele = waypoint.elevation
+                              point.dt = waypoint.time
+                              point.tid = track.tid
+
+                              pointDB = None
+                              pointDB = db_session.query(Point).filter_by(dt=point.dt, lat=point.lat, lon=point.lon, ele=point.ele).first()
+                              if(pointDB == None or pointDB.ptid == None):
+                                   db_session.add(point)
+                              else:
+                                   point = pointDB
+               db_session.commit()
 
      def get_name(self, nick, person):
                match nick:
