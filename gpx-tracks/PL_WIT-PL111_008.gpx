@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gpx xmlns="http://www.topografix.com/GPX/1/1" version="1.1" creator="PixAndMore - GPX-Manager"><metadata><bounds minlat="0" minlon="-1" maxlat="0" maxlon="0"/></metadata>
-<trk>
+
 <wpt lat="50.351362" lon="7.588588"><time>1897-11-23T20:35</time><name>Coblenz</name><cmt>Reise über Irun nach Spanien</cmt><sym>Wegpunkt</sym></wpt> 
 <wpt lat="49.110231" lon="6.179195"><time>1897-11-23T22:50</time><name>Metz</name><cmt>Reise über Irun nach Spanien</cmt><sym>Wegpunkt</sym></wpt> 
 <wpt lat="48.876839" lon="2.359225"><time>1897-11-24T08:10</time><name>Paris Gare de l'Est</name><cmt>Reise über Irun nach Spanien</cmt><sym>Wegpunkt</sym></wpt> 
@@ -14,8 +14,7 @@
 <wpt lat="" lon=""><time>1897-11-26T03:30</time><name>Vendade</name><cmt>Reise über Irun nach Spanien</cmt><sym>Wegpunkt</sym></wpt> 
 <wpt lat="" lon=""><time>1897-11-26T05:54</time><name>Viesto</name><cmt>Reise über Irun nach Spanien</cmt><sym>Wegpunkt</sym></wpt> 
 <wpt lat="43.46052" lon="-5.058095"><time>1897-11-27T17:00</time><name>Riba de Sella</name><cmt>Reise über Irun nach Spanien</cmt><sym>Wegpunkt</sym></wpt> 
-
-</trk></gpx>
+</gpx>
 
 
 

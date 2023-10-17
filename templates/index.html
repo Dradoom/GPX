@@ -1,20 +1,16 @@
-
 {% extends "base.html" %} 
 {% block content %} 
 <head>
-  <link rel="sytlesheet" href="https://www.unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <script src="https://www.unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
-<div id="map" sytle="with: 50%; height: 50vh;"></div>
-<script>
-  var map = L.map('map').setView([0,0],13);
-
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    <div id="map" style="width: 80%; height: 93vh; float: right;"></div>
+    <script>
+        var map = L.map('map').setView([0, 0], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-</script>
+        }).addTo(map);       
+    </script>
 </body>
 {% endblock %}
-
-
