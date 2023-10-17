@@ -6,6 +6,8 @@ from models.vehicle import Vehicle
 from models.track import Track
 from models.point import Point
 from database import db_session
+from dataHandling import DataHandling
+import query
 
 class FileConverter:
      def __init__(self, folder_path, database):
@@ -49,9 +51,6 @@ class FileConverter:
 
                db_session.commit()
 
-               if('PL_WIT-PL111' in file):
-                    print('here')
-
                print(track.dateiname)
 
                for waypoint in gpx.waypoints:
@@ -63,12 +62,38 @@ class FileConverter:
                     point.tid = track.tid
 
                     pointDB = None
-                    pointDB = db_session.query(Point).filter_by(dt=point.dt, lat=point.lat, lon=point.lon, ele=point.ele).first()
+                    pointDB = db_session.query(Point).filter_by(dt=point.dt, lat=point.lat, lon=point.lon, ele=point.ele, tid=point.tid).first()
                     if(pointDB == None or pointDB.ptid == None):
                          db_session.add(point)
                     else:
                          point = pointDB
                db_session.commit()
+
+               # dataHandling = DataHandling()
+               # connection = dataHandling.get_connection()
+               # cursor = connection.cursor()
+               # for waytrack in gpx.tracks:
+               #      for segments in waytrack.segments:
+                         
+                        
+               #           if(cursor is None):
+               #                print("keine Connection")
+               #                continue
+
+               #           for waypoint in segments.points:                             
+               #                point = Point()
+               #                point.lat = waypoint.latitude
+               #                point.lon = waypoint.longitude
+               #                point.ele = waypoint.elevation
+               #                point.dt = waypoint.time
+               #                point.tid = track.tid
+                              
+               #                cursor.execute(query.SELECT_POINT, (point.lat, point.lon, point.ele, point.dt, point.tid))
+               #                existing_point = cursor.fetchall()
+               #                if(existing_point.__len__() == 0):
+               #                     cursor.execute(query.INSERT_POINT, (point.lat, point.lon, point.ele, point.dt, point.tid))
+               # connection.commit()
+               # connection.close()  
 
                for waytrack in gpx.tracks:
                     for segments in waytrack.segments:
@@ -87,6 +112,9 @@ class FileConverter:
                               else:
                                    point = pointDB
                db_session.commit()
+               db_session.close()
+
+        
 
      def get_name(self, nick, person):
                match nick:

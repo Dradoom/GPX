@@ -2,3 +2,4 @@ flask
 bootstrap-flask
 sqlalchemy
 Flask-Autodoc
+gpxpy

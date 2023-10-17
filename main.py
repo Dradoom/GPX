@@ -2,6 +2,7 @@ from flask import Flask
 from database import init_db, db_session
 from fileConverter import FileConverter
 from constants import FILE_PATH
+import sqlite3
 
 if __name__ == "__main__":
 
