@@ -69,50 +69,50 @@ class FileConverter:
                          point = pointDB
                db_session.commit()
 
-               # dataHandling = DataHandling()
-               # connection = dataHandling.get_connection()
-               # cursor = connection.cursor()
-               # for waytrack in gpx.tracks:
-               #      for segments in waytrack.segments:
-                         
-                        
-               #           if(cursor is None):
-               #                print("keine Connection")
-               #                continue
-
-               #           for waypoint in segments.points:                             
-               #                point = Point()
-               #                point.lat = waypoint.latitude
-               #                point.lon = waypoint.longitude
-               #                point.ele = waypoint.elevation
-               #                point.dt = waypoint.time
-               #                point.tid = track.tid
-                              
-               #                cursor.execute(query.SELECT_POINT, (point.lat, point.lon, point.ele, point.dt, point.tid))
-               #                existing_point = cursor.fetchall()
-               #                if(existing_point.__len__() == 0):
-               #                     cursor.execute(query.INSERT_POINT, (point.lat, point.lon, point.ele, point.dt, point.tid))
-               # connection.commit()
-               # connection.close()  
-
+               dataHandling = DataHandling()
+               connection = dataHandling.get_connection()
+               cursor = connection.cursor()
                for waytrack in gpx.tracks:
                     for segments in waytrack.segments:
-                         for waypoint in segments.points:
+                         
+                        
+                         if(cursor is None):
+                              print("keine Connection")
+                              continue
+
+                         for waypoint in segments.points:                             
                               point = Point()
                               point.lat = waypoint.latitude
                               point.lon = waypoint.longitude
                               point.ele = waypoint.elevation
                               point.dt = waypoint.time
                               point.tid = track.tid
+                              
+                              cursor.execute(query.SELECT_POINT, (point.lat, point.lon, point.ele, point.dt, point.tid))
+                              existing_point = cursor.fetchall()
+                              if(existing_point.__len__() == 0):
+                                   cursor.execute(query.INSERT_POINT, (point.lat, point.lon, point.ele, point.dt, point.tid))
+               connection.commit()
+               connection.close()  
 
-                              pointDB = None
-                              pointDB = db_session.query(Point).filter_by(dt=point.dt, lat=point.lat, lon=point.lon, ele=point.ele).first()
-                              if(pointDB == None or pointDB.ptid == None):
-                                   db_session.add(point)
-                              else:
-                                   point = pointDB
-               db_session.commit()
-               db_session.close()
+               # for waytrack in gpx.tracks:
+               #      for segments in waytrack.segments:
+               #           for waypoint in segments.points:
+               #                point = Point()
+               #                point.lat = waypoint.latitude
+               #                point.lon = waypoint.longitude
+               #                point.ele = waypoint.elevation
+               #                point.dt = waypoint.time
+               #                point.tid = track.tid
+
+               #                pointDB = None
+               #                pointDB = db_session.query(Point).filter_by(dt=point.dt, lat=point.lat, lon=point.lon, ele=point.ele).first()
+               #                if(pointDB == None or pointDB.ptid == None):
+               #                     db_session.add(point)
+               #                else:
+               #                     point = pointDB
+               # db_session.commit()
+               # db_session.close()
 
         
 
