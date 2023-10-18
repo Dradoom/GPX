@@ -10,3 +10,10 @@ __pycache__/sqlitedb.cpython-311.pyc
 /models/__pycache__/point.cpython-311.pyc
 /models/__pycache__/track.cpython-311.pyc
 /models/__pycache__/vehicle.cpython-311.pyc
+/__pycache__/database.cpython-311.pyc
+/__pycache__/dataHandling.cpython-311.pyc
+/models/__pycache__/__init__.cpython-311.pyc
+/models/__pycache__/person.cpython-311.pyc
+/models/__pycache__/point.cpython-311.pyc
+/models/__pycache__/track.cpython-311.pyc
+/models/__pycache__/vehicle.cpython-311.pyc
