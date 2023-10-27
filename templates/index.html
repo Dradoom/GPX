@@ -41,11 +41,13 @@
 
     // Funktion zum Hinzufügen von Trackpunkten zur Karte
     function addTrackPointsToMap(tracks) {
-        
-        for (var i = 0; i < tracks.length; i++){
-            var latlngs = [];
-            var trackPoints = tracks[i]["points"]
 
+        console.log(tracks.length)
+        
+        for (var j = 0; j < tracks.length; j++) {
+            var latlngs = [];
+            var trackPoints = tracks[j]["points"]
+            console.log(trackPoints)
             for (var i = 0; i < trackPoints.length; i++) {
                 latlngs.push([trackPoints[i]["lat"], trackPoints[i]["lon"]]);
             }
@@ -58,7 +60,7 @@
         var tracks_list = {{ tracks|safe }};
         if (tracks_list && tracks_list.length > 0) {
         try {
-            console.log(tracks_list);
+            // console.log(tracks_list);
             addTrackPointsToMap(tracks_list);
         } catch (e) {
              console.error("Error parsing track points:", e);
