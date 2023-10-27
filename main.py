@@ -8,7 +8,7 @@ if __name__ == "__main__":
 
     init_db()
 
-    file_converter = FileConverter(FILE_PATH, db_session)
-    file_converter.convert_files()
+    # file_converter = FileConverter(FILE_PATH, db_session)
+    # file_converter.convert_files()
 
     app = Flask(__name__)

@@ -5,12 +5,75 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
-    <div id="map" style="width: 80%; height: 93vh; float: right;"></div>
-    <script>
-        var map = L.map('map').setView([0, 0], 13);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);       
-    </script>
+    <div style="float: left;"></div>
+    <h1>Textverarbeitung mit Flask</h1>
+    <form action="/process_text" method="post">
+        <label for="user_text">Folder Path with only GPX Files:</label>
+        <input type="text" id="user_text" name="user_text">
+        <input type="submit" value="Verarbeiten">
+    </form>
 </body>
+<body>
+    <div style="float: left;"></div>
+    <h1>Liste von auswählbaren Objekten aus der Datenbank</h1>
+    <form action="/process_selection" method="post">
+        <ul>
+            {% for item in items %}
+                <li>
+                    <label>
+                        <input type="checkbox" name="selected_items" value="{{ item.tid }}">
+                        {{ item.dateiname }}
+                    </label>
+                </li>
+            {% endfor %}
+        </ul>
+        <input type="submit" value="Ausgewählte Elemente verarbeiten">
+    </form>
+</body>
+<body>
+    <div id="map" style="width: 80%; height: 93vh; float: right;"></div>
+</body>
+<script>
+    var map = L.map('map').setView([0, 0], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Funktion zum Hinzufügen von Trackpunkten zur Karte
+    function addTrackPointsToMap(tracks) {
+        
+        for (var i = 0; i < tracks.length; i++){
+            var latlngs = [];
+            var trackPoints = tracks[i]["points"]
+
+            for (var i = 0; i < trackPoints.length; i++) {
+                latlngs.push([trackPoints[i]["lat"], trackPoints[i]["lon"]]);
+            }
+
+            var polyline = L.polyline(latlngs, { color: 'blue' }).addTo(map);
+            map.fitBounds(polyline.getBounds());
+        }
+    }
+        // Draw the tracks when the page loads
+        var tracks_list = {{ tracks|safe }};
+        if (tracks_list && tracks_list.length > 0) {
+        try {
+            console.log(tracks_list);
+            addTrackPointsToMap(tracks_list);
+        } catch (e) {
+             console.error("Error parsing track points:", e);
+        }
+    }
+
+    // // Draw the tracks when the page loads
+    // var trackPoints = {{ track_points|safe }};
+    // if (trackPoints && trackPoints.length > 0) {
+    //     try {
+    //         console.log(trackPoints);
+    //         addTrackPointsToMap(trackPoints);
+    //     } catch (e) {
+    //          console.error("Error parsing track points:", e);
+    //     }
+    // }
+</script>
 {% endblock %}
