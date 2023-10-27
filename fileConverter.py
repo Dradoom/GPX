@@ -41,7 +41,12 @@ class FileConverter:
                     vehicle = vehicleDB
                db_session.commit()
 
-               track = Track(file, person, vehicle)
+               if(gpx.tracks[0].name is not None):
+                    track_name = gpx.tracks[0].name
+               elif(gpx.name is not None):
+                    track_name = gpx.name
+
+               track = Track(file, person, vehicle, track_name)
                trackDB = None
                trackDB = db_session.query(Track).filter_by(dateiname=file).first()
                if(trackDB == None or trackDB.tid == None):
