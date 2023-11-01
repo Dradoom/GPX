@@ -19,7 +19,12 @@ class FileConverter:
 
           for file in os.listdir(files_dir):
                gpx_file = open(self.folder_path + "/" + file, 'r')
-               gpx = gpxpy.parse(gpx_file)
+
+               try:
+                    gpx = gpxpy.parse(gpx_file)
+               except:
+                    continue
+               
                file_name_arry = file.split('_')
                person = Person(file_name_arry[0], '','','')
                self.get_name(person.nick, person)
