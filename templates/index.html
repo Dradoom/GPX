@@ -41,11 +41,11 @@
                     </div>
                     <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
                         <ul>
-                            {% for item in items2 %}
+                            {% for person in persons %}
                                 <li>
                                     <label>
-                                        <input type="checkbox" name="selected_items" value="{{ item.pid }}">
-                                        {{ item.name }}
+                                        <input type="checkbox" name="selected_persons" value="{{ person.pid }}">
+                                        {{ person.name }}
                                     </label>
                                 </li>
                             {% endfor %}
@@ -53,11 +53,11 @@
                     </div>
                     <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
                         <ul>
-                            {% for item in items3 %}
+                            {% for vehicle in vehicles %}
                                 <li>
                                     <label>
-                                        <input type="checkbox" name="selected_items" value="{{ item.fzid }}">
-                                        {{ item.polkz }}
+                                        <input type="checkbox" name="selected_vehicles" value="{{ vehicle.fzid }}">
+                                        {{ vehicle.polkz }}
                                     </label>
                                 </li>
                             {% endfor %}
@@ -65,6 +65,7 @@
                     </div>
                 </div>
                 <input type="submit" value="Selected Items to display">
+                <button id="clearMap">Clear Map</button>
             </form>
         </div>
         <div id="map" style="flex: 1; height: 93vh;"></div>
@@ -99,7 +100,15 @@
     }
 }
         // Draw the tracks when the page loads
-        var tracks_list = {{ tracks|safe }};
+
+        var tracks_list;
+        try {
+            tracks_list = {{ tracks|safe }};
+        } catch (e) {
+            console.error("Error parsing tracks:", e);
+        }
+
+        
         if (tracks_list && tracks_list.length > 0) {
         try {
             // console.log(tracks_list);
@@ -109,15 +118,21 @@
         }
     }
 
-    // // Draw the tracks when the page loads
-    // var trackPoints = {{ track_points|safe }};
-    // if (trackPoints && trackPoints.length > 0) {
-    //     try {
-    //         console.log(trackPoints);
-    //         addTrackPointsToMap(trackPoints);
-    //     } catch (e) {
-    //          console.error("Error parsing track points:", e);
-    //     }
-    // }
+    document.getElementById('clearMap').addEventListener('click', function() {
+    clearMap();
+});
+
+function clearMap() {
+    for(i in map._layers) {
+        if(map._layers[i]._path != undefined) {
+            try {
+                map.removeLayer(map._layers[i]);
+            }
+            catch(e) {
+                console.log("problem with " + e + map._layers[i]);
+            }
+        }
+    }
+}
 </script>
 {% endblock %}

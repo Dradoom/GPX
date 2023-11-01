@@ -21,7 +21,8 @@ def index():
     items1 = Track.query.all()
     items2 = Person.query.all()
     items3 = Vehicle.query.all()
-    return render_template("index.html", items1=items1, items2=items2, items3=items3)
+    tracks1 = []
+    return render_template("index.html", items1=items1, persons=items2, vehicles=items3, tracks=tracks1)
 
 @app.route('/process_text', methods=['POST'])
 def process_text():
@@ -33,13 +34,18 @@ def process_text():
 
 @app.route('/process_selection', methods=['POST'])
 def process_selection():
-    selected_item_ids = request.form.getlist('selected_items')
-    selected_items = Track.query.filter(Track.tid.in_(selected_item_ids)).all()
+    selected_track_ids = request.form.getlist('selected_items')
+    selected_person_ids = request.form.getlist('selected_persons')
+    selected_vehicle_ids = request.form.getlist('selected_vehicles')
 
-    # Gather all points of the selected tracks
+    selected_tracks = Track.query.filter(Track.tid.in_(selected_track_ids)).all()
+    selected_persons = Track.query.filter(Track.pid.in_(selected_person_ids)).all()
+    selected_vehicles = Track.query.filter(Track.fzid.in_(selected_vehicle_ids)).all()
+
+    # Gather all points of the selected tracks, persons, and vehicles
     track_points = []
     tracks = []
-    for item in selected_items:
+    for item in selected_tracks + selected_persons + selected_vehicles:
         points = Point.query.filter_by(tid = item.tid).all()
         track_points = []
         for point in points:
@@ -59,10 +65,9 @@ def process_selection():
 
         tracks.append(track)
 
-
     tracks_json = json.dumps(tracks)
 
-    return render_template('index.html', items1 = Track.query.all(), items2 = Person.query.all(), items3 = Vehicle.query.all(), tracks=tracks_json)
+    return render_template('index.html', items1=Track.query.all(), persons=Person.query.all(), vehicles=Vehicle.query.all(), tracks=tracks_json)
 
 if __name__ == "__main__":
     app.run(debug=True, port=5001)
