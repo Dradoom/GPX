@@ -20,11 +20,8 @@ class FileConverter:
           for file in os.listdir(files_dir):
                gpx_file = open(self.folder_path + "/" + file, 'r')
 
-               try:
-                    gpx = gpxpy.parse(gpx_file)
-               except:
-                    continue
-               
+               gpx = gpxpy.parse(gpx_file)
+
                file_name_arry = file.split('_')
                person = Person(file_name_arry[0], '','','')
                self.get_name(person.nick, person)
@@ -46,10 +43,12 @@ class FileConverter:
                     vehicle = vehicleDB
                db_session.commit()
 
-               if(gpx.tracks[0].name is not None):
+               if(gpx.tracks.__len__() > 0 and  gpx.tracks[0] != None and gpx.tracks[0].name != None):
                     track_name = gpx.tracks[0].name
-               elif(gpx.name is not None):
+               elif gpx.name != None and gpx.name != "None":
                     track_name = gpx.name
+               else:
+                    track_name = file
 
                track = Track(file, person, vehicle, track_name)
                trackDB = None

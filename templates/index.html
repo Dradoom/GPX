@@ -7,25 +7,64 @@
 <body>
     <div style="display: flex;">
         <div style="flex: 1;">
-            <h1>Textverarbeitung mit Flask</h1>
+            <h1>GPX File Importer</h1>
             <form action="/process_text" method="post">
-                <label for="user_text">Folder Path with only GPX Files:</label>
+                <label for="user_text">Folder Path For GPX Files:</label>
                 <input type="text" id="user_text" name="user_text">
-                <input type="submit" value="Verarbeiten">
+                <input type="submit" value="Import">
             </form>
-            <h1>Liste von auswählbaren Objekten aus der Datenbank</h1>
+            <h1>Selectable Tracks</h1>
             <form action="/process_selection" method="post">
-                <ul>
-                    {% for item in items %}
-                        <li>
-                            <label>
-                                <input type="checkbox" name="selected_items" value="{{ item.tid }}">
-                                {{ item.dateiname }}
-                            </label>
-                        </li>
-                    {% endfor %}
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" id="tab1-tab" data-bs-toggle="tab" href="#tab1" role="tab" aria-controls="tab1" aria-selected="true">Tracks</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="tab2-tab" data-bs-toggle="tab" href="#tab2" role="tab" aria-controls="tab2" aria-selected="false">People</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="tab3-tab" data-bs-toggle="tab" href="#tab3" role="tab" aria-controls="tab3" aria-selected="false">Vehicles</a>
+                    </li>
                 </ul>
-                <input type="submit" value="Ausgewählte Elemente verarbeiten">
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
+                        <ul>
+                            {% for item in items1 %}
+                                <li>
+                                    <label>
+                                        <input type="checkbox" name="selected_items" value="{{ item.tid }}">
+                                        {{ item.name }}
+                                    </label>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
+                        <ul>
+                            {% for item in items2 %}
+                                <li>
+                                    <label>
+                                        <input type="checkbox" name="selected_items" value="{{ item.pid }}">
+                                        {{ item.name }}
+                                    </label>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
+                        <ul>
+                            {% for item in items3 %}
+                                <li>
+                                    <label>
+                                        <input type="checkbox" name="selected_items" value="{{ item.fzid }}">
+                                        {{ item.polkz }}
+                                    </label>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <input type="submit" value="Selected Items to display">
             </form>
         </div>
         <div id="map" style="flex: 1; height: 93vh;"></div>

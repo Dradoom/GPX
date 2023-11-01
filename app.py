@@ -6,6 +6,8 @@ from fileConverter import FileConverter
 from flask_bootstrap import Bootstrap5
 from models.point import Point
 from models.track import Track
+from models.person import Person
+from models.vehicle import Vehicle
 import json
 
 load_dotenv() 
@@ -16,8 +18,10 @@ bootstrap = Bootstrap5(app)
 @app.route("/", methods=["POST", "GET"])
 @app.route("/index", methods=["POST", "GET"])
 def index():
-    items = Track.query.all()
-    return render_template("index.html", items=items)
+    items1 = Track.query.all()
+    items2 = Person.query.all()
+    items3 = Vehicle.query.all()
+    return render_template("index.html", items1=items1, items2=items2, items3=items3)
 
 @app.route('/process_text', methods=['POST'])
 def process_text():
@@ -58,7 +62,7 @@ def process_selection():
 
     tracks_json = json.dumps(tracks)
 
-    return render_template('index.html', items=Track.query.all(), tracks=tracks_json)
+    return render_template('index.html', items1 = Track.query.all(), items2 = Person.query.all(), items3 = Vehicle.query.all(), tracks=tracks_json)
 
 if __name__ == "__main__":
     app.run(debug=True, port=5001)
